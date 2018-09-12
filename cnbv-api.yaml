@@ -2,16 +2,15 @@ openapi: 3.0.0
 info:
   title: Especificación API para la CNBV
   description: |
-    Especificación Técnica del API para la CNBV
-    para mayor información, ir a
-    [sitio web de la CNBV](https://www.gob.mx/cnbv)
+    Descargar Especificación
+    [OAS 3.0.0](https://dcm.dads.infotec.mx/s/HGPsrt8LxbYZyiM)
   termsOfService: 'http://swagger.io/terms/'
   contact:
     email: info@cnbv.gob.mx
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: "1.0.1"
+  version: "1.0.0"
 servers:
   - description: SwaggerHub API Auto Mocking
     url: https://virtserver.swaggerhub.com/cnbv/cnbv/1.0.0
@@ -50,8 +49,6 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      security:
-        - api_key: []
   '/api/solicitudReportes/{id}/datos':
     get:
       tags:
@@ -100,8 +97,6 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      security:
-        - api_key: []
     put:
       tags:
         - solicitud-reporte-resource
@@ -145,10 +140,6 @@ paths:
                 $ref: '#/components/schemas/Dato'
         description: datos
         required: true
-      security:
-        - cnbv_auth:
-            - 'write:acuses'
-            - 'read:reportes'
   '/api/solicitudReportes/{id}/estadoReporte':
     put:
       tags:
@@ -185,10 +176,6 @@ paths:
               $ref: '#/components/schemas/EstadoReporte'
         description: estadoReporte
         required: true
-      security:
-        - cnbv_auth:
-            - 'write:acuses'
-            - 'read:reportes'
     get:
       tags:
         - solicitud-reporte-resource
@@ -217,10 +204,6 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      security:
-        - cnbv_auth:
-            - 'write:acuses'
-            - 'read:reportes'
 components:
   requestBodies:
     Reporte:
@@ -417,17 +400,11 @@ components:
         id: 
           type: string
         moneda:
-          type: string 
+          type: string
   securitySchemes:
-    cnbv_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'http://cnbv.swagger.io/oauth/dialog'
-          scopes:
-            'write:acuses': crear notificaciones
-            'read:reportes': consultar reportes
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+    bearerAuth:
+      type: http
+      schema: bearer
+      bearerFormat: JWT
+security:
+  - bearerAuth: []
