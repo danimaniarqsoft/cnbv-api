@@ -2,9 +2,8 @@ openapi: 3.0.0
 info:
   title: Especificación API para una ITF
   description: |
-    Especificación Técnica del API para una ITF
-    para mayor información, ir a
-    [sitio web de la CNBV](https://www.gob.mx/cnbv)
+    Descargar Especificación
+    [OAS 3.0.0](https://dcm.dads.infotec.mx/s/HGPsrt8LxbYZyiM)
   termsOfService: 'http://swagger.io/terms/'
   contact:
     email: info@cnbv.gob.mx
@@ -49,10 +48,6 @@ paths:
               $ref: '#/components/schemas/SolicitudReporte'
         description: solicitudReporte
         required: true
-      security:
-        - cnbv_auth:
-            - 'write:acuses'
-            - 'read:reportes'
   '/api/solicitudReportes/{id}/datos':
     get:
       tags:
@@ -101,8 +96,6 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-      security:
-        - api_key: []
   '/api/solicitudReportes/{id}/estadoReporte':
     put:
       tags:
@@ -139,10 +132,6 @@ paths:
               $ref: '#/components/schemas/EstadoReporte'
         description: estadoReporte
         required: true
-      security:
-        - cnbv_auth:
-            - 'write:acuses'
-            - 'read:reportes'
 components:
   requestBodies:
     Reporte:
@@ -340,17 +329,10 @@ components:
           type: string
         moneda:
           type: string 
-
   securitySchemes:
-    cnbv_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: 'http://cnbv.swagger.io/oauth/dialog'
-          scopes:
-            'write:acuses': crear notificaciones
-            'read:reportes': consultar reportes
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+security:
+  - bearerAuth: []
