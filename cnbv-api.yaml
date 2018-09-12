@@ -352,7 +352,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ColumnaReporte'
-      
     Concepto:
       type: object
       properties:
@@ -364,7 +363,6 @@ components:
           type: integer
         conceptoPadreId:
           type: string
-    
     CatalogoConceptos:
       type: object
       properties:
@@ -376,7 +374,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Concepto'
-    
     TemplateReporteCatalogoConceptos:
       type: object
       properties:
@@ -402,9 +399,9 @@ components:
         moneda:
           type: string
   securitySchemes:
-    bearerAuth:
+    bearerAuth:            # arbitrary name for the security scheme
       type: http
-      schema: bearer
-      bearerFormat: JWT
+      scheme: bearer
+      bearerFormat: JWT 
 security:
   - bearerAuth: []
